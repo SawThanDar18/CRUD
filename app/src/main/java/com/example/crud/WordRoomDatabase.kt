@@ -9,6 +9,27 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+/*@Database(entities = arrayOf(Word::class), version = DATABASE_VERSION)
+abstract class WordRoomDatabase : RoomDatabase() {
+
+    abstract fun wordDao(): WordDAO
+
+    companion object {
+        const val DATABASE_VERSION = 1
+        val DATABASE_NAME = "Note-Room"
+
+        private var instance: WordRoomDatabase? = null
+
+        fun getInstance(context: Context): WordRoomDatabase {
+            if (instance == null)
+                instance = Room.databaseBuilder(context, WordRoomDatabase::class.java, DATABASE_NAME)
+                    .fallbackToDestructiveMigration()
+                    .build()
+
+                return instance!!
+            }
+        }
+    }*/
 
 @Database(entities = [Word::class], version = 1)
 abstract class WordRoomDatabase : RoomDatabase() {
@@ -45,10 +66,6 @@ abstract class WordRoomDatabase : RoomDatabase() {
         private class WordDatabaseCallback(
             private val scope: CoroutineScope
         ) : RoomDatabase.Callback() {
-            /**
-             * Override the onOpen method to populate the database.
-             * For this sample, we clear the database every time it is created or opened.
-             */
             override fun onOpen(db: SupportSQLiteDatabase) {
                 super.onOpen(db)
                 // If you want to keep the data through app restarts,
@@ -61,18 +78,14 @@ abstract class WordRoomDatabase : RoomDatabase() {
             }
         }
 
-        /**
-         * Populate the database in a new coroutine.
-         * If you want to start with more words, just add them.
-         */
         suspend fun populateDatabase(wordDao: WordDAO) {
             // Start the app with a clean database every time.
             // Not needed if you only populate on creation.
-           // wordDao.deleteAll()
+            // wordDao.deleteAll()
 
-            var word = Word("Hello","I am saw thandar!")
+            var word = Word("Hello", "I am saw thandar!")
             wordDao.insert(word)
         }
     }
-
 }
+

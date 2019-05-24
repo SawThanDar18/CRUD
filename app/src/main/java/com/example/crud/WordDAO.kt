@@ -1,10 +1,7 @@
 package com.example.crud
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface WordDAO {
@@ -12,10 +9,27 @@ interface WordDAO {
     @Query("SELECT * from note_table ORDER BY title ASC")
     fun getAlphabetizedWords(): LiveData<List<Word>>
 
+    //@get:Query("SELECT * from note_table")
+    //val allNotes : LiveData<List<Word>>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(word: Word)
 
+    /*@Insert
+    fun insertNote(vararg words: Word)
+
+    @Update
+    fun updateNote(vararg words: Word)
+
+    @Delete
+    fun deleteNote(words: Word)*/
+
     @Query("DELETE FROM note_table")
     fun deleteAll()
+
+    //new
+    /*val allNotes : LiveData<List<Word>>
+    fun updateNote(vararg words: Word)
+    fun deleteNote(word: Word)*/
 
 }
