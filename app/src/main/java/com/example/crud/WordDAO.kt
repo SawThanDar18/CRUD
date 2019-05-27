@@ -9,11 +9,14 @@ interface WordDAO {
     @Query("SELECT * from note_table ORDER BY title ASC")
     fun getAlphabetizedWords(): LiveData<List<Word>>
 
-    //@get:Query("SELECT * from note_table")
-    //val allNotes : LiveData<List<Word>>
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(word: Word)
+
+    @Query("DELETE FROM note_table")
+    fun deleteAll()
+
+    //@get:Query("SELECT * from note_table")
+    //val allNotes : LiveData<List<Word>>
 
     /*@Insert
     fun insertNote(vararg words: Word)
@@ -23,9 +26,6 @@ interface WordDAO {
 
     @Delete
     fun deleteNote(words: Word)*/
-
-    @Query("DELETE FROM note_table")
-    fun deleteAll()
 
     //new
     /*val allNotes : LiveData<List<Word>>

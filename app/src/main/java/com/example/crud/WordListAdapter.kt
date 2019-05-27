@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 class WordListAdapter internal constructor(context: Context) : RecyclerView.Adapter<WordListAdapter.WordViewHolder>() {
@@ -12,9 +13,25 @@ class WordListAdapter internal constructor(context: Context) : RecyclerView.Adap
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var words = emptyList<Word>() // Cached copy of words
 
-    inner class WordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    var context = context
+
+    inner class WordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val wordItemView: TextView = itemView.findViewById(R.id.text_title)
         val wordItemView2 : TextView = itemView.findViewById(R.id.text_note)
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+        var customItemClickListener : CustomItemClickListener?= null
+
+        fun setOnCustomItemClickListener(itemClickListener: CustomItemClickListener){
+            this.customItemClickListener = itemClickListener
+        }
+
+        override fun onClick(v: View?) {
+            this.customItemClickListener!!.onCustomItemClickListener(v!!, adapterPosition)
+        }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder {
@@ -26,6 +43,14 @@ class WordListAdapter internal constructor(context: Context) : RecyclerView.Adap
         val current = words[position]
         holder.wordItemView.text = current.title
         holder.wordItemView2.text = current.notes
+        holder.setOnCustomItemClickListener(object : CustomItemClickListener{
+            override fun onCustomItemClickListener(view: View, position: Int) {
+                Toast.makeText(context, "Title : " + holder.wordItemView.text.toString(), Toast.LENGTH_LONG).show()
+                view.setOnClickListener{
+
+                }
+            }
+        })
     }
 
     internal fun setWords(words: List<Word>) {
