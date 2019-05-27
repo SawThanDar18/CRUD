@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".NewWordActivity"/>
+        <activity android:name=".RecyclerView_Item"/>
     </application>
 
 </manifest>

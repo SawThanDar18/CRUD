@@ -15,6 +15,9 @@ interface WordDAO {
     @Query("DELETE FROM note_table")
     fun deleteAll()
 
+    @Delete
+    fun deleteNote(words: Word)
+
     //@get:Query("SELECT * from note_table")
     //val allNotes : LiveData<List<Word>>
 

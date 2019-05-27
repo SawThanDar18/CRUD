@@ -2,15 +2,10 @@ package com.example.crud
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
-import android.view.ContextMenu
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
@@ -18,9 +13,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.content_main.*
-import android.widget.AdapterView.AdapterContextMenuInfo
-import kotlinx.android.synthetic.main.activity_new_word.*
+import kotlinx.android.synthetic.main.activity_new_word.view.*
+import kotlinx.android.synthetic.main.recyclerview_item.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,10 +23,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var wordViewModel: WordViewModel
     private lateinit var toolBar: Toolbar
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter : WordListAdapter
-
-    //private lateinit var adapter2 : ArrayAdapter<*>
-    //var noteList : MutableList<Word> = ArrayList()
+    private lateinit var adapter: WordListAdapter
+    //private lateinit var update : EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,10 +37,6 @@ class MainActivity : AppCompatActivity() {
         adapter = WordListAdapter(applicationContext)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
-
-        //adapter2 = ArrayAdapter(this, android.R.layout.simple_list_item_1, noteList)
-        //registerForContextMenu(recyclerView)
-        //recyclerView!!.adapter = adapter
 
         // Get a new or existing ViewModel from the ViewModelProvider.
         wordViewModel = ViewModelProviders.of(this).get(WordViewModel::class.java)
@@ -66,6 +54,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, NewWordActivity::class.java)
             startActivityForResult(intent, newWordActivityRequestCode)
         }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
@@ -83,9 +72,10 @@ class MainActivity : AppCompatActivity() {
                 Toast.LENGTH_LONG
             ).show()
         }
+
     }
 
-    /*override fun onCreateContextMenu(menu: ContextMenu, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+   /* override fun onCreateContextMenu(menu: ContextMenu, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
 
         super.onCreateContextMenu(menu, v, menuInfo)
         val info = menuInfo as AdapterView.AdapterContextMenuInfo
@@ -99,8 +89,8 @@ class MainActivity : AppCompatActivity() {
         return super.onContextItemSelected(item)
         //val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
         //val user = recyclerView(info.position)
-        val info = item.menuInfo as AdapterContextMenuInfo
-        val user = recyclerview(info.position)
+        val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
+        val user = adapter(info.position)
 
         when(item.itemId)
         {
@@ -123,11 +113,9 @@ class MainActivity : AppCompatActivity() {
                          user.edit_word = editTitle.text.toString()
                      }
                     })
-            }
+            }*/
         }
-    }*/
 
-}
 /* private lateinit var adapter : ArrayAdapter<*>
  var noteList : MutableList<Word> = ArrayList()
 

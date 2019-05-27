@@ -1,12 +1,22 @@
 package com.example.crud
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
+import kotlinx.android.synthetic.main.activity_new_word.view.*
+import kotlinx.android.synthetic.main.recyclerview_item.*
+import kotlin.concurrent.thread
 
 class NewWordActivity : AppCompatActivity(){
 
